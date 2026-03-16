@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products | Prince Eshop</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #020817;
+            --soft-gray: #F8FAFC;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --accent-yellow: #FACC15;
+        }
+
+        body { background-color: #fff; color: var(--primary-dark); margin: 0; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- NAVBAR --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; background: #fff; }
+        .navbar h2 { font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px;}
+        .nav-links { display: flex; gap: 35px; align-items: center;}
+        .nav-links a { text-decoration: none; color: var(--primary-dark); font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text-muted); }
+        .nav-actions { display: flex; align-items: center; gap: 15px;}
+        .nav-actions .btn-rounded { border: 1px solid var(--border-color); padding: 10px 24px; border-radius: 50px; text-decoration: none; color: var(--primary-dark); font-weight: 500; font-size: 14px; }
+
+        /* --- PAGE HEADER --- */
+        .page-header {
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 42px;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin: 0;
+        }
+
+        /* --- DYNAMIC PRODUCT GRID --- */
+        .filters { 
+            display: flex; 
+            gap: 15px; 
+            margin-bottom: 40px; 
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .filters a { 
+            padding: 8px 24px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 50px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            color: var(--text-muted); 
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .filters a:hover {
+            border-color: var(--primary-dark);
+            color: var(--primary-dark);
+        }
+        .filters a.active { 
+            background: var(--primary-dark); 
+            color: white; 
+            border-color: var(--primary-dark);
+        }
+        
+        .store-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 100px; min-height: 400px; align-content: start;}
+        .product-card { text-decoration: none; color: inherit; transition: transform 0.3s; display: block;}
+        .product-card:hover { transform: translateY(-5px); }
+        
+        /* UPDATED: Strict square box with cover to make all images identical sizes */
+        .image-container { 
+            width: 100%; 
+            aspect-ratio: 1; 
+            background: var(--soft-gray); 
+            border-radius: var(--radius-md); 
+            overflow: hidden; 
+            margin-bottom: 15px; 
+            position: relative;
+        }
+        .image-container img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Forces the image to perfectly fill the box */
+            display: block;
+        }
+        
+        .product-info h3 { font-size: 15px; margin: 0 0 5px 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px;}
+        .stars { color: var(--accent-yellow); font-size: 14px; letter-spacing: 2px;}
+        .price { font-weight: 700; font-size: 16px;}
+        
+        .card-discount-badge { position: absolute; top: 10px; right: 10px; background: #EA580C; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; z-index: 2; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--primary-dark); color: #fff; padding: 80px 0 40px; margin-top: auto;}
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        .footer-grid h3 { font-size: 28px; margin: 0 0 20px 0; font-weight: 700;}
+        .footer-grid p { color: #94A3B8; font-size: 14px; line-height: 1.6; max-width: 300px;}
+        .footer-grid h4 { font-size: 16px; margin: 0 0 20px 0; font-weight: 500; color: #fff;}
+        .footer-grid a { color: #94A3B8; text-decoration: none; display: block; margin-bottom: 12px; font-size: 14px; transition: color 0.3s;}
+        .footer-grid a:hover { color: #fff; }
+        .footer-bottom { border-top: 1px solid #334155; padding-top: 20px; display: flex; justify-content: space-between; font-size: 13px; color: #94A3B8; }
+        .footer-bottom-links { display: flex; gap: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container" style="min-height: 100vh; display: flex; flex-direction: column;">
+        
+        <nav class="navbar">
+            <h2>Prince Eshop</h2>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html" style="font-weight: 600; color: #000;">Product</a>
+            </div>
+            <div class="nav-actions">
+                <a href="login.html" class="btn-rounded">Log in</a>
+                <a href="register.html" class="btn-rounded" style="background: var(--primary-dark); color: white;">Sign Up</a>
+            </div>
+        </nav>
+
+        <div class="page-header">
+            <h1 id="pageTitle">All Products</h1>
+            <p>Explore our carefully curated eco-friendly collection.</p>
+        </div>
+
+        <div class="filters" id="filterContainer">
+            <a href="products.html" data-target="all">All Items</a>
+            <a href="products.html?discount=true" data-target="discount">Sale / Up to 25% Off</a>
+            <a href="products.html?category=1" data-target="1">Clothing</a>
+            <a href="products.html?category=2" data-target="2">Accessories</a>
+            <a href="products.html?category=3" data-target="3">Shoes</a>
+            <a href="products.html?category=4" data-target="4">Home</a>
+        </div>
+
+        <div id="storeGrid" class="store-grid">
+            <p style="grid-column: span 4; text-align: center;">Loading amazing products...</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>Prince Eshop.</h3>
+                    <p>Access high-quality, eco-friendly products and services that elevate your lifestyle while protecting our planet.</p>
+                    <p style="margin-top:30px; color: #fff;">info@princeshop.com</p>
+                </div>
+                <div>
+                    <h4>Customer Service</h4>
+                    <a href="#">My Account</a>
+                    <a href="#">Order History</a>
+                    <a href="#">Returns & Refunds</a>
+                </div>
+                <div>
+                    <h4>Products</h4>
+                    <a href="#">Clothing</a>
+                    <a href="#">Accessories</a>
+                    <a href="#">Shoes</a>
+                </div>
+                <div>
+                    <h4>Our Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Sustainability</a>
+                </div>
+                <div>
+                    <h4>Follow Us</h4>
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Prince E-Shopping. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" style="color:#94A3B8; text-decoration:none;">Terms</a>
+                    <a href="#" style="color:#94A3B8; text-decoration:none;">Privacy</a>
+                    <a href="#" style="color:#94A3B8; text-decoration:none;">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const storeGrid = document.getElementById('storeGrid');
+            const pageTitle = document.getElementById('pageTitle');
+            
+            // 1. Read the URL parameters to figure out what to fetch
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryId = urlParams.get('category');
+            const isDiscount = urlParams.get('discount');
+
+            // 2. Set the active state on the correct filter button
+            const filterLinks = document.querySelectorAll('#filterContainer a');
+            filterLinks.forEach(link => link.classList.remove('active'));
+
+            if (isDiscount === 'true') {
+                document.querySelector('a[data-target="discount"]').classList.add('active');
+                pageTitle.innerText = "Special Discounts";
+            } else if (categoryId) {
+                const activeLink = document.querySelector(`a[data-target="${categoryId}"]`);
+                if(activeLink) {
+                    activeLink.classList.add('active');
+                    pageTitle.innerText = activeLink.innerText + " Collection"; // Update Page Title based on category
+                }
+            } else {
+                document.querySelector('a[data-target="all"]').classList.add('active');
+            }
+
+            // 3. Build the API Query
+            let apiUrl = 'customer.php?action=all_products';
+            if (categoryId) apiUrl += `&category=${categoryId}`;
+            if (isDiscount) apiUrl += `&discount=true`;
+
+            // 4. Fetch the data
+            const response = await apiCall(apiUrl);
+            
+            if (response.status === 'success') {
+                const products = response.data;
+                
+                if (products.length === 0) {
+                    storeGrid.innerHTML = '<p style="grid-column: span 4; text-align: center; color: var(--text-muted); margin-top: 40px;">No products found in this category.</p>';
+                    return;
+                }
+
+                storeGrid.innerHTML = ''; 
+                products.forEach(p => {
+                    const price = parseFloat(p.price || 0).toFixed(2);
+                    const discount = parseInt(p.discount_percent || 0);
+                    
+                    let discountBadge = '';
+                    let finalPrice = price;
+                    let priceHTML = `<div class="price">$${price}</div>`;
+
+                    if (discount > 0) {
+                        discountBadge = `<div class="card-discount-badge">-${discount}%</div>`;
+                        const discountAmount = price * (discount / 100);
+                        finalPrice = (price - discountAmount).toFixed(2);
+                        
+                        priceHTML = `
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <span style="text-decoration: line-through; color: #94A3B8; font-size: 12px;">$${price}</span>
+                                <span class="price">$${finalPrice}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    storeGrid.innerHTML += `
+                        <a href="product_details.html?id=${p.id}" class="product-card">
+                            <div class="image-container">
+                                ${discountBadge}
+                                <img src="${p.photo_path}" alt="${p.product_name}">
+                            </div>
+                            <div class="product-info">
+                                <h3>${p.product_name}</h3>
+                                <div class="product-price-row">
+                                    <div class="stars">★★★★★</div>
+                                    ${priceHTML}
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                storeGrid.innerHTML = `<p style="grid-column: span 4; color:red; text-align:center; margin-top: 40px;">Failed to load products.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+/* css/products_grid.css - Adapted from CEFAPEK Blogs */
+
+.products-header { display: flex; justify-content: space-between; align-items: center; margin: 0 20px; }
+.products-header h1 { color: #020817; font-size: 30px; font-weight: 600; }
+.products-header p { color: #64748B; font-size: 16px; font-weight: 400; }
+
+/* Filter & Search */
+.products-filter { display: flex; gap: 30px; align-items: center; margin: 20px; }
+.products-filter form { width: 100%; position: relative; display: flex; align-items: center; }
+.products-filter form input {
+    width: 100%; border: 1px solid #E2E8F0; border-radius: 6px;
+    padding: 10px 10px 10px 35px; font-size: 14px; outline: none; background-color: white;
+}
+
+/* Grid Layout */
+.products-contents { margin: 40px 20px 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.products-item {
+    width: 100%; position: relative; overflow: hidden; border: 1px solid #E2E8F0;
+    border-radius: 8px; box-shadow: 0 1px 2px 0 #0000000D; padding: 10px 15px 0; background: white;
+}
+.products-item-thumbnail { width: calc(100% - 10px); aspect-ratio: 16 / 11; overflow: hidden; position: relative; margin: 0 5px; border-radius: 6px; }
+.products-item-thumbnail img {
+    position: absolute; top: 50%; left: 50%; width: auto; height: 100%;
+    transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; object-fit: cover;
+}
+
+/* Card Text */
+.products-item-text { display: flex; flex-direction: column; gap: 15px; margin: 15px 0 10px; }
+.products-item-text-header { display: flex; justify-content: space-between; align-items: center; }
+.products-item-text-header .badge-seller { padding: 5px 12px; border-radius: 100px; font-weight: 500; font-size: 12px; background-color: #3C530B; color: white; }
+.products-item-text-body h2 { font-size: 18px; color: #020817; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.products-item-text-body p { font-size: 14px; color: #64748B; }
+
+/* Card Footer (Actions) */
+.products-item-text-footer {
+    padding: 15px 20px; background-color: #F1F5F980; border-top: 1px solid #E2E8F0;
+    display: flex; align-items: center; justify-content: space-between; margin: 0 -15px;
+}
+.products-item-text-footer button {
+    background: transparent; border: none; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 5px;
+}
+.btn-edit { color: #3C530B; }
+.btn-delete { color: #dc3545; }
+
+/* Custom Popup for Editing */
+.popup {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 1000;
+}
+.popup.active { display: flex; }
+.popup-form { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.popup-form-header { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+.popup-form-header h1 { font-size: 22px; color: #020817; }
+.popup-form-header .close-btn { font-size: 24px; cursor: pointer; color: #64748B; }
+
+.field { margin-bottom: 15px; }
+.field label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: 500; color: #333; }
+.field input { width: 100%; border: 1px solid #E2E8F0; border-radius: 6px; padding: 10px; font-size: 14px; outline: none; }
+.for-sub { width: 100%; background: #3C530B; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 15px; margin-top: 10px;}
+/* Custom Confirm Modal */
+.custom-confirm-modal {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none; /* Hidden by default */
+    justify-content: center; 
+    align-items: center; 
+    z-index: 9999;
+}
+.confirm-box { 
+    background-color: #fff; 
+    padding: 25px; 
+    border-radius: 8px; 
+    max-width: 350px; 
+    width: 90%; 
+    text-align: center; 
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25); 
+}
+.confirm-box p { 
+    font-size: 16px; 
+    color: #333; 
+    margin-bottom: 20px; 
+}
+.confirm-actions { 
+    display: flex; 
+    gap: 10px; 
+}
+.confirm-actions button { 
+    flex: 1; 
+    padding: 10px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: 500;
+}
+.btn-danger { background-color: #dc3545; color: white; }
+.btn-secondary { background-color: #6c757d; color: white; }

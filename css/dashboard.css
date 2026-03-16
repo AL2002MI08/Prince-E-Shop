@@ -1,0 +1,167 @@
+/* css/dashboard.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+p, h1, h2, h3, h4, h5, h6 { margin: 0; color: black; }
+* { padding: 0; margin: 0; box-sizing: border-box; }
+
+body {
+    font-family: "Poppins", sans-serif;
+    overflow: hidden; /* Prevents whole page from scrolling, only content area scrolls */
+    position: relative;
+    background-color: #FAFAFA;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+a { text-decoration: none; color: black; }
+
+/* Main Dashboard Wrapper */
+.dashboard {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    background-color: #FAFAFA;
+    height: 100vh;
+    border-right: 1px solid #E2E8F0;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE */
+}
+.sidebar::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
+
+.sidebar-header {
+    padding: 20px 0 20px 28px;
+    background-color: white;
+    width: 100%;
+    border-bottom: 1px solid #E2E8F0;
+}
+.sidebar-header h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3F3F46;
+}
+
+.sidebar-body {
+    padding: 28px 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.sidebar-body-part {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.sidebar-body-part p {
+    margin-bottom: 5px;
+    color: #A1A1AA;
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #3F3F46;
+    gap: 10px;
+    line-height: 21px;
+    font-size: 14px;
+    padding: 8px 0 8px 15px;
+    transition: all .3s ease;
+    border-radius: 6px 0 0 6px;
+}
+
+.sidebar a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Active State Design from your code */
+.sidebar a.active-menu, .sidebar a:focus {
+    background-color: #F1f1f4;
+    border-left: 3px solid black;
+    color: #1C1C1C;
+    font-weight: 500;
+}
+
+/* Sidebar Footer & Account */
+.sidebar > .sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: auto;
+    padding: 28px 0 20px 28px;
+}
+
+.dashboard-account {
+    padding: 10px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.dashboard-account h6 { font-size: 14px; font-weight: 500; color: #222222; }
+.dashboard-account p { color: #22222280; font-size: 11px; }
+
+/* --- RIGHT CONTAINER (Main Content) --- */
+.right-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.right-container-header {
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
+    border-bottom: 1px solid #E2E8F0;
+    align-items: center;
+    height: 70px;
+    min-height: 70px;
+}
+
+.dash_search form { position: relative; }
+.dash_search form input {
+    outline: none;
+    border: 1px solid #E2E8F0;
+    border-radius: 6px;
+    padding: 8px 10px 8px 35px;
+    font-size: 14px;
+    min-width: 300px;
+    background-color: #FAFAFA;
+}
+.dash_search form input::placeholder { color: #64748B; }
+
+.dash_great h6 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* The area where the specific page content goes */
+.contents-sec {
+    padding: 20px 30px;
+    overflow-y: auto; /* This makes ONLY the content scroll */
+    flex-grow: 1;
+    background-color: #FAFAFA;
+}

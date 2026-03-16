@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Meher E-Shopping</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #020817;
+            --soft-gray: #F8FAFC;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --accent-yellow: #FACC15;
+        }
+
+        body { background-color: #fff; color: var(--primary-dark); margin: 0; font-family: 'Inter', sans-serif; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh;}
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; width: 100%; box-sizing: border-box;}
+
+        /* --- NAVBAR --- */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; background: #fff; }
+        .navbar h2 { font-size: 26px; font-weight: 700; margin: 0; letter-spacing: -0.5px;}
+        .nav-links { display: flex; gap: 35px; align-items: center;}
+        .nav-links a { text-decoration: none; color: var(--primary-dark); font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text-muted); }
+        .nav-actions { display: flex; align-items: center; gap: 15px;}
+        .nav-actions .btn-rounded { border: 1px solid var(--border-color); padding: 10px 24px; border-radius: 50px; text-decoration: none; color: var(--primary-dark); font-weight: 500; font-size: 14px; }
+
+        /* --- BREADCRUMB --- */
+        .breadcrumb { margin: 20px 0; font-size: 14px; color: var(--text-muted); }
+        .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .breadcrumb a:hover { color: var(--primary-dark); }
+
+        /* --- PRODUCT LAYOUT --- */
+        .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 80px; align-items: start;}
+        
+        .product-image-box {
+            background: var(--soft-gray); border-radius: var(--radius-lg); aspect-ratio: 1; 
+            display: flex; align-items: center; justify-content: center; position: relative; padding: 40px; box-sizing: border-box;
+        }
+        .product-image-box img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+        .card-discount-badge { position: absolute; top: 20px; right: 20px; background: #EA580C; color: white; padding: 6px 12px; border-radius: 6px; font-size: 14px; font-weight: bold; z-index: 2; }
+
+        .product-info-box { display: flex; flex-direction: column; gap: 20px; }
+        .product-category { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .product-title { font-size: 36px; font-weight: 700; margin: 0; line-height: 1.2; }
+        .stars { color: var(--accent-yellow); font-size: 18px; letter-spacing: 2px;}
+        .price { font-weight: 700; font-size: 32px; color: var(--primary-dark); }
+
+        .product-meta { background: var(--soft-gray); padding: 20px; border-radius: var(--radius-md); font-size: 14px; line-height: 1.6; }
+        .product-meta p { margin: 5px 0; }
+        .product-meta span { font-weight: 600; color: var(--primary-dark); }
+
+        .btn-order { background: var(--primary-dark); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 16px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; text-align: center; width: 100%; margin-top: 10px; }
+        .btn-order:hover { opacity: 0.9; }
+        .btn-download { background: white; color: var(--primary-dark); border: 1px solid var(--border-color); padding: 18px; border-radius: 50px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; display: block; transition: background 0.2s;}
+        .btn-download:hover { background: var(--soft-gray); }
+
+        /* --- COMMENTS SECTION --- */
+        .comments-section { max-width: 800px; margin: 0 auto 100px; width: 100%;}
+        .comments-section h3 { font-size: 24px; margin-bottom: 30px; font-weight: 600; }
+        
+        .comment-form { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .comment-form textarea { width: 100%; border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; font-family: 'Inter', sans-serif; font-size: 14px; outline: none; resize: vertical; min-height: 100px; box-sizing: border-box; }
+        .comment-form textarea:focus { border-color: var(--primary-dark); }
+        .comment-form button { align-self: flex-start; padding: 12px 30px; background: var(--primary-dark); color: white; border: none; border-radius: 50px; font-weight: 500; cursor: pointer; }
+
+        .comment-box { background: white; border: 1px solid var(--border-color); padding: 20px; border-radius: var(--radius-md); margin-bottom: 20px; }
+        .comment-header { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; }
+        .comment-author { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px;}
+        .comment-author .avatar { width: 35px; height: 35px; background: var(--soft-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--text-muted); font-weight: bold; border: 1px solid var(--border-color);}
+        .comment-date { font-size: 12px; color: var(--text-muted); }
+        .comment-text { font-size: 14px; color: #475569; line-height: 1.6; margin: 0; }
+
+        /* --- FOOTER --- */
+        footer { background: var(--primary-dark); color: #fff; padding: 80px 0 40px; margin-top: auto;}
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+        .footer-grid h3 { font-size: 28px; margin: 0 0 20px 0; font-weight: 700;}
+        .footer-grid p { color: #94A3B8; font-size: 14px; line-height: 1.6; max-width: 300px;}
+        .footer-grid h4 { font-size: 16px; margin: 0 0 20px 0; font-weight: 500; color: #fff;}
+        .footer-grid a { color: #94A3B8; text-decoration: none; display: block; margin-bottom: 12px; font-size: 14px; transition: color 0.3s;}
+        .footer-grid a:hover { color: #fff; }
+        .footer-bottom { border-top: 1px solid #334155; padding-top: 20px; display: flex; justify-content: space-between; font-size: 13px; color: #94A3B8; }
+        .footer-bottom-links { display: flex; gap: 20px; }
+
+        @media (max-width: 768px) {
+            .product-layout { grid-template-columns: 1fr; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="navbar">
+            <h2>Meher</h2>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html" style="font-weight: 600; color: #000;">Product</a>
+                <a href="#">About Us</a>
+                <a href="#">Service</a>
+                <a href="#">Blog</a>
+            </div>
+            <div class="nav-actions">
+                <a href="login.html" class="btn-rounded">Log in</a>
+                <a href="register.html" class="btn-rounded" style="background: var(--primary-dark); color: white;">Sign Up</a>
+            </div>
+        </nav>
+
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> / <a href="products.html">Products</a> / <span id="breadTitle">Details</span>
+        </div>
+
+        <div id="actionAlert" class="alert"></div>
+
+        <div id="detailsContainer" class="product-layout">
+            <p style="grid-column: span 2; text-align: center; color: var(--text-muted); padding: 50px 0;">Loading product details...</p>
+        </div>
+
+        <div class="comments-section">
+            <h3>Customer Reviews</h3>
+            
+            <form id="commentForm" class="comment-form">
+                <textarea id="commentText" placeholder="Write a review about this product..." required></textarea>
+                <button type="submit">Post Review</button>
+            </form>
+
+            <div id="commentsList">
+                <p style="color: var(--text-muted);">Loading reviews...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3>Meher.</h3>
+                    <p>Access high-quality, eco-friendly products and services that elevate your lifestyle while protecting our planet.</p>
+                    <p style="margin-top:30px; color: #fff;">info@princeshop.com</p>
+                </div>
+                <div>
+                    <h4>Customer Service</h4>
+                    <a href="#">My Account</a>
+                    <a href="#">Order History</a>
+                    <a href="#">Returns & Refunds</a>
+                </div>
+                <div>
+                    <h4>Products</h4>
+                    <a href="#">Clothing</a>
+                    <a href="#">Accessories</a>
+                    <a href="#">Shoes</a>
+                </div>
+                <div>
+                    <h4>Our Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press</a>
+                    <a href="#">Sustainability</a>
+                </div>
+                <div>
+                    <h4>Follow Us</h4>
+                    <a href="#">Facebook</a>
+                    <a href="#">Instagram</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Prince E-Shopping. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" style="color:#94A3B8; text-decoration:none;">Terms</a>
+                    <a href="#" style="color:#94A3B8; text-decoration:none;">Privacy</a>
+                    <a href="#" style="color:#94A3B8; text-decoration:none;">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+
+        if (!productId) {
+            document.getElementById('detailsContainer').innerHTML = "<p style='text-align:center;'>Product not found.</p>";
+            document.querySelector('.comments-section').style.display = 'none';
+        } else {
+            loadProductDetails();
+            loadComments();
+        }
+
+        // Fetch Product Details
+        async function loadProductDetails() {
+            const response = await apiCall(`customer.php?action=product_details&id=${productId}`);
+            const container = document.getElementById('detailsContainer');
+            
+            if (response.status === 'success') {
+                const p = response.data;
+                
+                // Update breadcrumb
+                document.getElementById('breadTitle').innerText = p.product_name;
+
+                // Format Pricing and Discount logic
+                const price = parseFloat(p.price || 0).toFixed(2);
+                const discount = parseInt(p.discount_percent || 0);
+                
+                let badgeHTML = '';
+                let priceHTML = `<div class="price">$${price}</div>`;
+
+                if (discount > 0) {
+                    badgeHTML = `<div class="card-discount-badge">-${discount}% OFF</div>`;
+                    const discountAmount = price * (discount / 100);
+                    const finalPrice = (price - discountAmount).toFixed(2);
+                    
+                    priceHTML = `
+                        <div style="display:flex; align-items:center; gap:15px;">
+                            <span class="price" style="color: #EA580C;">$${finalPrice}</span>
+                            <span style="text-decoration: line-through; color: #94A3B8; font-size: 20px;">$${price}</span>
+                        </div>
+                    `;
+                }
+
+                // Handle optional Document
+                const docButton = p.document_path && p.document_path !== 'null'
+                    ? `<a href="${p.document_path}" download class="btn-download">📥 Download Specification Document</a>` 
+                    : '';
+
+                container.innerHTML = `
+                    <div class="product-image-box">
+                        ${badgeHTML}
+                        <img src="${p.photo_path}" alt="${p.product_name}">
+                    </div>
+                    
+                    <div class="product-info-box">
+                        <div class="product-category">${p.category_name || 'Uncategorized'}</div>
+                        <h2 class="product-title">${p.product_name}</h2>
+                        
+                        <div style="display:flex; align-items:center; gap: 15px;">
+                            <div class="stars">★★★★★</div>
+                            <span style="font-size: 14px; color: var(--text-muted);">(Customer Reviews)</span>
+                        </div>
+                        
+                        ${priceHTML}
+                        
+                        <div class="product-meta">
+                            <p><span>Seller:</span> ${p.seller_name}</p>
+                            <p><span>Location:</span> 📍 ${p.location}</p>
+                            <p><span>Availability:</span> In Stock</p>
+                        </div>
+                        
+                        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 15px;">
+                            <button onclick="placeOrder()" class="btn-order">🛒 Add to Cart / Order Now</button>
+                            ${docButton}
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<p style="color:red; text-align:center; grid-column:span 2;">Error: ${response.message}</p>`;
+            }
+        }
+
+        // Fetch Comments
+        async function loadComments() {
+            const response = await apiCall(`customer.php?action=get_comments&product_id=${productId}`);
+            const list = document.getElementById('commentsList');
+            
+            if (response.status === 'success') {
+                if (response.data.length === 0) {
+                    list.innerHTML = "<p style='color: var(--text-muted);'>No reviews yet. Be the first to review this product!</p>";
+                    return;
+                }
+                
+                list.innerHTML = '';
+                response.data.forEach(c => {
+                    // Get first letter of username for Avatar
+                    const initial = c.username.charAt(0).toUpperCase();
+                    
+                    list.innerHTML += `
+                        <div class="comment-box">
+                            <div class="comment-header">
+                                <div class="comment-author">
+                                    <div class="avatar">${initial}</div>
+                                    ${c.username}
+                                </div>
+                                <span class="comment-date">${c.created_at}</span>
+                            </div>
+                            <div class="stars" style="font-size: 12px; margin-bottom: 10px;">★★★★★</div>
+                            <p class="comment-text">${c.comment_text}</p>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // Handle Placing Order
+        async function placeOrder() {
+            const response = await apiCall('customer.php?action=place_order', 'POST', { product_id: productId });
+            if (response.status === 'success') {
+                showAlert('actionAlert', "Order placed successfully! The seller will contact you.", 'success');
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to see the success message
+            } else {
+                showAlert('actionAlert', response.message, 'danger');
+            }
+        }
+
+        // Handle Adding Comment
+        document.getElementById('commentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = document.getElementById('commentText').value;
+            const btn = this.querySelector('button');
+            const ogText = btn.innerText;
+            btn.innerText = "Posting...";
+            btn.disabled = true;
+            
+            const response = await apiCall('customer.php?action=add_comment', 'POST', { 
+                product_id: productId, 
+                comment: text 
+            });
+            
+            if (response.status === 'success') {
+                showAlert('actionAlert', "Review posted successfully!", 'success');
+                this.reset();
+                loadComments(); // Refresh comments
+            } else {
+                showAlert('actionAlert', response.message, 'danger');
+            }
+            
+            btn.innerText = ogText;
+            btn.disabled = false;
+        });
+    </script>
+</body>
+</html>

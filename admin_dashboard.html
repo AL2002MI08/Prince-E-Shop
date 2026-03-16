@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Prince E-Shopping</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/dashboard.css"> 
+
+
+    <style type="text/css">
+        /* --- HEADER STYLES --- */
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 20px;
+        }
+        .reports-header h1 {
+            color: #020817;
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .reports-header p {
+            color: #64748B;
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0;
+        }
+        .reports-header button {
+            padding: 10px 16px;
+            background-color: black;
+            color: #F8FAFC;
+            display: flex;
+            gap: 10px;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .reports-header button:hover {
+            opacity: 0.9;
+        }
+
+        /* --- STATS GRID (SUB-HEADER) STYLES --- */
+        .reports-sub-header {
+            margin: 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .reports-sub-header div {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 30px;
+            border-radius: 12px;
+            align-items: center;
+            border: 1px solid #E2E8F0;
+            background-color: #ffffff;
+        }
+        .reports-sub-header div h1 {
+            color: #222222;
+            font-size: 40px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .reports-sub-header div p {
+            color: #222222;
+            font-size: 16px;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        /* --- TABLE STYLES --- */
+        .reports-table-container {
+            margin: 30px 20px;
+            padding: 20px;
+            border: 1px solid #E2E8F0;
+            border-radius: 12px; /* Added slight radius to match grid */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background-color: #ffffff;
+        }
+        .reports-table-container h1 {
+            color: #020817;
+            font-size: 24px;
+            margin: 0;
+        }
+        .reports-table {
+            border: 1px solid #E2E8F0;
+            border-collapse: collapse; /* Ensures borders merge perfectly */
+            width: 100%; /* Ensures table takes up full container width */
+        }
+        .reports-table tr {
+            border: 1px solid #E2E8F0;
+        }
+        .reports-table thead {
+            background-color: #FAFAFA;
+        }
+        .reports-table th {
+            padding: 10px 24px;
+            color: #000000;
+            font-weight: 500;
+            font-size: 16px;
+            text-align: left;
+        }
+        .reports-table td {
+            padding: 10px 20px;
+            font-size: 14px;
+            text-align: left;
+            color: #020817;
+        }
+
+        /* --- BADGE STYLES (For User Roles) --- */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .badge-admin {
+            background-color: #E1F2BD; /* Matches your theme green */
+            color: #3C530B;
+        }
+        .badge-user {
+            background-color: #F1F5F9;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page-content" style="display: none;">
+        
+        <div class="reports-header">
+            <div>
+                <h1>Overview</h1>
+                <p>Monitor your system statistics and users</p>
+            </div>
+            <div>
+                <button onclick="window.open('index.html', '_blank')"><span>View Storefront</span></button>
+            </div>
+        </div>
+
+        <div class="reports-sub-header" id="statsGrid">
+            <div style="grid-column: span 4; border: none; background: transparent;">
+                <p>Loading statistics...</p>
+            </div>
+        </div>
+
+        <div class="reports-table-container">
+            <h1>Recent Orders</h1>
+            <table class="reports-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                    <tr><td colspan="4">Loading orders...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="reports-table-container" style="margin-bottom: 30px;">
+            <h1>System Users</h1>
+            <table class="reports-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <tr><td colspan="4">Loading users...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/nav.js"></script> 
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Generate the Sidebar Layout
+            loadDashboardLayout('Admin', 'dashboard', 'Administrator');
+
+            // 2. Load Page Data
+            loadStats();
+            loadOrders();
+            loadUsers();
+        });
+
+        async function loadStats() {
+            const response = await apiCall('admin.php?action=stats');
+            if (response.status === 'success') {
+                const data = response.data;
+                // Outputting HTML that matches the exact grid design
+                document.getElementById('statsGrid').innerHTML = `
+                    <div>
+                        <h1>${data.users}</h1>
+                        <p>Total Users</p>
+                    </div>
+                    <div>
+                        <h1>${data.products}</h1>
+                        <p>Total Products</p>
+                    </div>
+                    <div>
+                        <h1>${data.orders}</h1>
+                        <p>Total Orders</p>
+                    </div>
+                    <div>
+                        <h1>${data.comments}</h1>
+                        <p>Total Comments</p>
+                    </div>
+                `;
+            } else {
+                document.getElementById('statsGrid').innerHTML = `<p style="color:red; grid-column: span 4; text-align: center;">Error loading stats.</p>`;
+            }
+        }
+
+        async function loadOrders() {
+            const response = await apiCall('admin.php?action=recent_orders');
+            const tbody = document.getElementById('ordersTableBody');
+            
+            if (response.status === 'success') {
+                if (response.data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">No orders placed yet.</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = '';
+                response.data.forEach(order => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td style="font-weight: 500;">#${order.id}</td>
+                            <td>${order.customer_name}</td>
+                            <td>${order.product_name}</td>
+                            <td style="color: #64748B;">${order.order_date}</td>
+                        </tr>
+                    `;
+                });
+            }
+        }
+
+        async function loadUsers() {
+            const response = await apiCall('admin.php?action=all_users');
+            const tbody = document.getElementById('usersTableBody');
+            
+            if (response.status === 'success') {
+                tbody.innerHTML = '';
+                response.data.forEach(user => {
+                    const badgeClass = `badge-${user.role.toLowerCase()}`;
+                    tbody.innerHTML += `
+                        <tr>
+                            <td style="color: #64748B;">#${user.id}</td>
+                            <td style="font-weight: 500;">${user.username}</td>
+                            <td><span class="badge ${badgeClass}">${user.role}</span></td>
+                            <td>
+                                <button style="padding: 6px 12px; background-color: #E2E8F0; border: none; border-radius: 4px; cursor: pointer;" onclick="editUser(${user.id})">Edit</button>
+                                <button style="padding: 6px 12px; background-color: #F87171; color: white; border: none; border-radius: 4px; cursor: pointer;" onclick="deleteUser(${user.id})">Delete</button>
+                        </tr>
+                    `;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
