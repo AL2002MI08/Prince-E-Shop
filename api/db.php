@@ -2,7 +2,7 @@
 // api/db.php
 $servername = "localhost";
 $username = "root";
-$password = "root"; // MAMP default password
+$password = ""; // Default for XAMPP
 $dbname = "prince_e_shopping"; 
 
 // Create connection

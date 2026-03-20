@@ -66,13 +66,13 @@ prince-e-shopping/
 ├── uploads/              # Directory for user-uploaded product images and documents
 │
 ├── index.html            # Storefront homepage (Top sellers, Promo banners)
-├── products.html         # Full catalog with dynamic filtering
-├── product_details.html  # Single product view, reviews, order button
-├── login.html            # User authentication
-├── register.html         # User registration (Role selection)
-├── seller_dashboard.html # Seller view for managing inventory
-├── upload_product.html   # Seller form for adding new products
-└── admin_products.html   # Admin view for global inventory management
+│   ├── products.html         # Full catalog with dynamic filtering
+│   ├── product_details.html  # Single product view, reviews, order button
+│   ├── login.html            # User authentication
+│   ├── register.html         # User registration (Role selection)
+│   ├── seller_dashboard.html # Seller view for managing inventory
+│   ├── upload_product.html   # Seller form for adding new products
+│   └── admin_products.html   # Admin view for global inventory management
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 ⚙️ Installation & Setup
@@ -198,4 +198,3 @@ password: seller123
 Role: Customer
 Username: customer1
 Password: customer123
-
