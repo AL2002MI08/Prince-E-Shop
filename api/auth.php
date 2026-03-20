@@ -59,7 +59,21 @@ elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'login') {
     } else {
         echo json_encode(["status" => "error", "message" => "Invalid username or password"]);
     }
-} else {
+} 
+// Handle Session Check
+elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && $action === 'check_session') {
+    if (isset($_SESSION['userid'])) {
+        echo json_encode(["status" => "success", "user" => ["id" => $_SESSION['userid'], "role" => $_SESSION['role']]]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "No active session."]);
+    }
+}
+// Handle Logout
+elseif ($action === 'logout') {
+    session_destroy();
+    echo json_encode(["status" => "success", "message" => "Logout successful"]);
+}
+else {
     echo json_encode(["status" => "error", "message" => "Invalid request"]);
 }
 
